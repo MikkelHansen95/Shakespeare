@@ -5,17 +5,12 @@
  */
 package miniprojectshakespeare;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- *
- * @author Mikkel
+ * @author Mikkel & Mathias
  */
 public class MiniProjectShakespeare {
 
@@ -42,8 +37,6 @@ public class MiniProjectShakespeare {
             String temp = (String) unsortedArray.get(min_idx);
             unsortedArray.set(min_idx, unsortedArray.get(i));
             unsortedArray.set(i, temp);
-            //System.out.println(unsortedArray.get(i));
-            //System.out.println(unsortedArray.get(min_idx));
         }
         long endTime = System.nanoTime() - startTime;
         System.out.println("Selection Sort : " + endTime / 1000000 + " ms" + " || " + endTime + " ns");
@@ -84,62 +77,8 @@ public class MiniProjectShakespeare {
         return unsortedArray;
     }
 
-    public static ArrayList<String> heapSort(ArrayList unsortedArray) {
 
-        long startTime = System.nanoTime();
 
-        int n = unsortedArray.size();
-
-        // Build heap (rearrange array) 
-        for (int i = n / 2 - 1; i >= 0; i--) {
-            heapify(unsortedArray, n, i);
-        }
-        
-        // One by one extract an element from heap 
-        for (int i = n - 1; i >= 0; i--) {
-            // Move current root to end 
-            String temp = (String) unsortedArray.get(0);
-            unsortedArray.set(0, unsortedArray.get(i));
-            unsortedArray.set(i, temp);
-            // call max heapify on the reduced heap 
-            heapify(unsortedArray, i, 0);
-        }
-        
-        long endTime = System.nanoTime() - startTime;
-        System.out.println("Heap Sort : " + endTime / 1000000 + " ms" + " || " + endTime + " ns");
-        
-        return unsortedArray;
-    }
-
-    // To heapify a subtree rooted with node i which is 
-    // an index in arr[]. n is size of heap 
-    public static ArrayList<String> heapify(ArrayList arr, int n, int i) {
-        int largest = i; // Initialize largest as root 
-        int l = 2 * i + 1; // left = 2*i + 1 
-        int r = 2 * i + 2; // right = 2*i + 2 
-
-        String leftChild = (String) arr.get(l);
-        String rightChild = (String) arr.get(r);
-        // If left child is larger than root 
-        if (l < n && leftChild.compareTo(rightChild) > 0) {
-            largest = l;
-        }
-
-        // If right child is larger than largest so far 
-        if (r < n && rightChild.compareTo(leftChild) > 0) {
-            largest = r;
-        }
-
-        // If largest is not root 
-        if (largest != i) {
-            String swap = (String) arr.get(i);
-            arr.set(i, arr.get(largest));
-            arr.set(largest, swap);
-            // Recursively heapify the affected sub-tree 
-            heapify(arr, n, largest);
-        }
-        return arr;
-    }
 
     public static ArrayList<String> mergeSort(ArrayList unsortedArray) {
         return unsortedArray;
@@ -157,7 +96,7 @@ public class MiniProjectShakespeare {
                     continue;
                 } else {
                     String lowercaseData = data.toLowerCase();
-                    String noCharacterData = lowercaseData.replaceAll("[^a-zA Z0-9]+", "");
+                    String noCharacterData = lowercaseData.replaceAll("[^a-zA Z]+", "");
                     String[] words = noCharacterData.split(" ");
                     for (int i = 0; i < words.length; i++) {
                         if (words[i].isEmpty()) {
@@ -166,7 +105,6 @@ public class MiniProjectShakespeare {
                             result.add(words[i]);
                         }
 
-                        //System.out.println(words[i]);
                     }
                 }
             }
@@ -177,16 +115,23 @@ public class MiniProjectShakespeare {
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("/C:\\Users\\Mikkel\\Documents\\NetBeansProjects\\MiniProjectShakespeare\\src\\miniprojectshakespeare\\shakes.txt");
+        File file = new File("/Users/sofie/Desktop/Software Development/Shakespeare/MiniProjectShakespeare/src/miniprojectshakespeare/shakespeare.txt");
         ArrayList<String> cleanedFile = readAndCleanFile(file);
-        //ArrayList<String> SelectionSortArray = SelectionSort(cleanedFile);
-        //ArrayList<String> insertionSortArray = InsertionSort(cleanedFile);
-        ArrayList<String> heapSortArray = heapSort(cleanedFile);
-        //System.out.println(heapSortArray);
+        ArrayList<String> SelectionSortArray = SelectionSort(cleanedFile);
+        ArrayList<String> insertionSortArray = InsertionSort(cleanedFile);
+
+        HeapSort heap = new HeapSort();
+        heap.sort(cleanedFile);
+
+        MergeSort ms = new MergeSort();
+        ms.sort(cleanedFile);
+
+        TrieSort ts = new TrieSort();
+        ts.sort(cleanedFile);
 
         String ses = "a";
         String ses1 = "b";
-        System.out.println(ses1.compareTo(ses));
+       // System.out.println(ses1.compareTo(ses));
 
     }
 }
