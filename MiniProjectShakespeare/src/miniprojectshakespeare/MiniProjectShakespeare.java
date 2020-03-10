@@ -117,8 +117,8 @@ public class MiniProjectShakespeare {
 
         File file = new File("/Users/sofie/Desktop/Software Development/Shakespeare/MiniProjectShakespeare/src/miniprojectshakespeare/shakespeare.txt");
         ArrayList<String> cleanedFile = readAndCleanFile(file);
-        ArrayList<String> SelectionSortArray = SelectionSort(cleanedFile);
-        ArrayList<String> insertionSortArray = InsertionSort(cleanedFile);
+        //ArrayList<String> SelectionSortArray = SelectionSort(cleanedFile);
+        //ArrayList<String> insertionSortArray = InsertionSort(cleanedFile);
 
         HeapSort heap = new HeapSort();
         heap.sort(cleanedFile);
@@ -128,7 +128,7 @@ public class MiniProjectShakespeare {
 
         TrieSort ts = new TrieSort();
         ts.sort(cleanedFile);
-
+        System.out.println(cleanedFile.size());
         String ses = "a";
         String ses1 = "b";
        // System.out.println(ses1.compareTo(ses));
